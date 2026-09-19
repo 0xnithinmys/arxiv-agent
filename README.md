@@ -10,10 +10,8 @@ Built as an explicit [LangGraph](https://langchain-ai.github.io/langgraph/) stat
 - [Setup & Run](#setup--run)
 - [Example Run](#example-run)
 - [Design Decisions & Tradeoffs](#design-decisions--tradeoffs)
-- [Scope](#scope)
 - [Testing](#testing)
 - [Project Structure](#project-structure)
-- [Video Reflection](#video-reflection)
 
 ## Architecture
 
@@ -232,26 +230,6 @@ The second question is a deliberate off-paper test — it demonstrates the refus
 
 **With more time:** a cross-encoder reranker over retrieved chunks (the biggest plausible quality win, deferred as unnecessary at this scale); an OCR fallback instead of refusing on scanned PDFs; hybrid BM25+dense retrieval for notation-heavy papers, where embedding similarity alone can miss exact-term matches.
 
-## Scope
-
-**Design questions the brief asks us to think about:**
-
-| Question | Where it's answered |
-|---|---|
-| Zero or many candidate papers for a vague topic? | `search_papers` → `select_paper` in the [ingestion graph](#ingestion-graph-input--executive-briefing): 0 results is a graceful error, 1 result skips selection, many results go through one LLM call that picks the best match with a justification. |
-| PDF fails to parse cleanly (scanned, broken layout, huge paper)? | `fetch_parse`: a scanned/broken PDF is detected by a minimum-extracted-characters threshold and refused gracefully — no OCR, no silent garbage output. See the [ingestion table](#ingestion-graph-input--executive-briefing). |
-| Keeping QA grounded rather than hallucinated? | `verify_answer` recomputes `is_grounded` in code against the actually-retrieved chunk IDs rather than trusting the model's self-report, with one bounded regeneration before an explicit refusal. See the [QA graph](#qa-graph-one-grounded-question-answer-turn). |
-| State passed/persisted between summarization and QA? | In-memory for the ingestion run (`GraphState`), then handed to a `SqliteSaver`-backed checkpoint for the QA graph (`thread_id = paper.arxiv_id`) so a session survives across separate CLI invocations, not just within one process. See [Two graphs, not one](#two-graphs-not-one). |
-
-**Out of scope, per the brief — confirmed, not just assumed:**
-
-| Excluded | Status |
-|---|---|
-| Frontend/UI beyond a basic CLI | ✅ The only interface is `main.py` / `arxiv_agent/cli.py`. An earlier Streamlit UI was built and then deliberately removed once the brief's scope was re-read, along with its dependency in `requirements.txt`. |
-| Multi-user auth, deployment, production infra | ✅ No auth, no Dockerfile, no cloud config of any kind. The SQLite checkpoint is a local file, not a hosted store. |
-| Non-arXiv sources | ✅ `nodes/retrieve.py` uses only the official `arxiv` package — no scraping, no other paper databases. |
-| Fine-tuning any models | ✅ The embedding model (`bge-small-en-v1.5`) and LLMs (OpenAI/Groq) are used purely for inference; nothing here trains or fine-tunes a model. |
-
 ## Testing
 
 ```bash
@@ -287,7 +265,3 @@ arxiv-agent/
 │       └── qa.py
 └── tests/                        # unit + integration + adversarial
 ```
-
-## Video Reflection
-
-*(4-minute walkthrough of the approach taken for this assessment — link to be added.)*
