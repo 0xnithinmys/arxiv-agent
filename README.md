@@ -6,12 +6,19 @@ Built as an explicit [LangGraph](https://langchain-ai.github.io/langgraph/) stat
 
 ## Contents
 
+- [Demo](#demo)
 - [Architecture](#architecture)
 - [Setup & Run](#setup--run)
 - [Example Run](#example-run)
 - [Design Decisions & Tradeoffs](#design-decisions--tradeoffs)
 - [Testing](#testing)
 - [Project Structure](#project-structure)
+
+## Demo
+
+<video src="docs/assets/demo.mp4" controls width="100%">
+  Your viewer doesn't render inline video — download the clip directly: <a href="docs/assets/demo.mp4">docs/assets/demo.mp4</a>.
+</video>
 
 ## Architecture
 
