@@ -16,9 +16,9 @@ Built as an explicit [LangGraph](https://langchain-ai.github.io/langgraph/) stat
 
 ## Demo
 
-<video src="docs/assets/demo.mp4" controls width="100%">
-  Your viewer doesn't render inline video — download the clip directly: <a href="docs/assets/demo.mp4">docs/assets/demo.mp4</a>.
-</video>
+![Demo: grounded Q&A, then a refusal when the paper doesn't support an answer](docs/assets/demo.gif)
+
+40s clip — a grounded follow-up answer, then the explicit refusal path when asked something the paper doesn't cover. [Full 4-minute walkthrough (mp4)](docs/assets/demo.mp4).
 
 ## Architecture
 
