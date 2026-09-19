@@ -18,7 +18,7 @@ Built as an explicit [LangGraph](https://langchain-ai.github.io/langgraph/) stat
 
 ![Demo: grounded Q&A, then a refusal when the paper doesn't support an answer](docs/assets/demo.gif)
 
-40s clip — a grounded follow-up answer, then the explicit refusal path when asked something the paper doesn't cover. [Full 4-minute walkthrough (mp4)](docs/assets/demo.mp4).
+40s clip — a grounded follow-up answer, then the explicit refusal path when asked something the paper doesn't cover. [Full 4-minute walkthrough (with audio)](https://drive.google.com/file/d/1xVGNQodL5R9ZXku4DPQ--NFlWipadk5_/view?usp=sharing).
 
 ## Architecture
 
